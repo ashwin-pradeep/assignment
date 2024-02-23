@@ -34,7 +34,6 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
     setCart(prevCount => 
       prevCount > cart || prevCount === cart ?  quantityToAdd + prevCount :  cart + quantityToAdd 
       );
-      console.log(cart);
   };
 
 
