@@ -6,8 +6,10 @@ const Header = ({ isVisible, data , cartData}) => {
   const [cart, setCart] = useState(cartData);
 
   const addToCart = (inputValue) => {
-    const prevCartCount = cartData;
-    setCart(prevCount => prevCartCount + inputValue);
+    const quantityToAdd = parseInt(inputValue) || 0;
+    setCart(prevCount => 
+      prevCount > cart || prevCount === cart ?  quantityToAdd + prevCount :  cart + quantityToAdd 
+      );
   };
 
   return (

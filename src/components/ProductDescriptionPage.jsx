@@ -1,7 +1,7 @@
 import React, { useEffect, useRef ,useState} from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
-import AddToCart from "./AddToCart.jsx";
+import AddToCart from "./AddToCart";
 
 const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
   const targetRef = useRef(null);
@@ -29,9 +29,14 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
 
 
   const addToCart = (inputValue) => {
-    const prevCartCount = cartData;
-    setCart(prevCount => prevCartCount + inputValue);
+    const quantityToAdd = parseInt(inputValue) || 0;
+    console.log(quantityToAdd);
+    setCart(prevCount => 
+      prevCount > cart || prevCount === cart ?  quantityToAdd + prevCount :  cart + quantityToAdd 
+      );
+      console.log(cart);
   };
+
 
   return (
     <>
@@ -71,7 +76,7 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
                     all prices incl.{data.vat_percent}%taxes
                   </div>
                 <div className="cart-container">
-                <AddToCart data={data} cartData={cartData} AddToCart={addToCart}/>
+                  <AddToCart data={data} cartData={cartData} AddToCart={addToCart} />
                 </div>
               </div>
             </div>
@@ -88,16 +93,16 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
                   <div className="features">
                     <div className="features-title">Features</div>
                     {Object.entries(data.features).map(([item, value]) => (
-                      <li>
-                        <span className="features-title">{item}</span>: {value}
+                      <li key={item}>
+                        <span className="features-title" >{item}</span>: {value}
                       </li>
                     ))}
                   </div>
                   <div className="attachements">
                     <div className="attachements-title">Attachments</div>
-                    {data.attachments.map((item) => (
-                      <li>
-                        <a href={item.file_link} target="_blank">
+                    {data.attachments.map((item , index) => (
+                      <li key={index}>
+                        <a href={item.file_link} target="_blank" >
                           {item.file_label}
                         </a>
                       </li>
@@ -106,8 +111,8 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
                   <div className="keywords">
                     <div className="keywords-title">Keywords</div>
                     <div className="keywords-container">
-                        {data.keywords.map((item) => (
-                        <div className="keywords-tile">{item}</div>
+                        {data.keywords.map((item , index) => (
+                        <div className="keywords-tile" key={index}>{item}</div>
                         ))}
                     </div>
                   </div>
@@ -122,7 +127,7 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
                   <div className="price-breaks">
                     <div className="price-breaks-title">price breaks</div>
                     {Object.entries(data.price_breaks).map(([item, value]) => (
-                      <div className="breakdown-price">
+                      <div className="breakdown-price" key={item}>
                        <div>ex {item} {data.unit}</div> 
                        <div>{value}{data.currency}/{data.unit} </div> 
                       </div>

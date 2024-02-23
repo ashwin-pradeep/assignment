@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 
 const AddToCart = ({ data, cartData ,AddToCart}) => {
-  // State to store the count, with initial value of 1
-  const [cart, setCart] = useState(1);
 
-  const addToCart = (inputValue) => {
-    const prevCartCount = cartData;
-    setCart((prevCount) => prevCartCount + inputValue);
-    AddToCart();
+  // eslint-disable-next-line
+  const [cart, setCart] = useState(cartData);
+  const [inputValue, setInputValue] = useState(data.minimum_order_quantity);
+
+  const addToCart = () => {
+    const quantityToAdd = parseInt(inputValue) || 0;
+    setCart(prevCount => 
+      prevCount > cart || prevCount === cart ?  quantityToAdd + prevCount :  cart + quantityToAdd 
+      );
+    AddToCart(quantityToAdd);
   };
 
   const handleInputChange = (event) => {
-    const inputValue = parseInt(event.target.value);
-    if (!isNaN(inputValue)) {
-      setCart(inputValue);
-    }
+      setInputValue(event.target.value);
   };
 
   return (
@@ -22,13 +23,12 @@ const AddToCart = ({ data, cartData ,AddToCart}) => {
       <div className="pce-container">
         <input
           type="number"
-          defaultValue={data.minimum_order_quantity}
-          min={1}
+          value={inputValue}
           onChange={handleInputChange}
         />
         {data.unit}
       </div>
-      <button className="cart__add-to-cart" onClick={() => addToCart(1)}>
+      <button className="cart__add-to-cart" onClick={() => addToCart()}>
         Add to cart
       </button>
     </>
