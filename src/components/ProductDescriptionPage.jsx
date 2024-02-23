@@ -30,7 +30,6 @@ const ProductDescriptionPage = ({ setIsVisible, data ,cartData}) => {
 
   const addToCart = (inputValue) => {
     const quantityToAdd = parseInt(inputValue) || 0;
-    console.log(quantityToAdd);
     setCart(prevCount => 
       prevCount > cart || prevCount === cart ?  quantityToAdd + prevCount :  cart + quantityToAdd 
       );

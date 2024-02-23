@@ -24,7 +24,7 @@ const Header = ({ isVisible, data , cartData}) => {
             </div>
             <div className="cmp-header__container-right">
               {isVisible && (
-                <div className="cart-container">
+                <div className="cart-container mobile-cart">
                     <AddToCart data={data} cartData={cartData} AddToCart={addToCart} />
                 </div>
               )}
